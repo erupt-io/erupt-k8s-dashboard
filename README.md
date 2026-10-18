@@ -12,6 +12,15 @@ A ready-made Kubernetes admin. Add the dependency and a **Kubernetes** menu appe
 
 Built on [erupt-data-k8s](https://github.com/erupts/erupt/tree/develop/erupt-data/erupt-data-k8s), which ships with erupt 2.4.0 or newer. To model a resource the dashboard does not ship, such as a custom resource, use `@EruptK8s` there.
 
+## Try it
+
+```bash
+mvn spring-boot:run
+# http://localhost:8080  erupt / erupt
+```
+
+The dashboard runs on its own with an H2 file database under `./h2` and reads `~/.kube/config`, so whatever `kubectl` sees, the Workspace picker offers. H2 comes along as the zero-config database; set `spring.datasource.*` to use another.
+
 ## What you get
 
 | Menu | Kind | Actions |

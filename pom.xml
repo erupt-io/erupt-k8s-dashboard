@@ -20,9 +20,10 @@
             <artifactId>erupt-data-k8s</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <!-- The host application brings the erupt stack; here it also runs the standalone launcher -->
         <dependency>
             <groupId>xyz.erupt</groupId>
-            <artifactId>erupt-upms</artifactId>
+            <artifactId>erupt-spring-boot-starter</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -42,15 +43,17 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
-        <!-- Tests: the dashboard against fabric8's CRUD mock API server, with erupt-upms on H2 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+        <!-- The zero-config database of the launcher, and of a host application that sets none -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Tests run against fabric8's CRUD mock API server -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -66,4 +69,21 @@
             </exclusions>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- A library: no repackaging, the plugin only serves `mvn spring-boot:run` -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

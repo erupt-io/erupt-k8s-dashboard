@@ -1,7 +1,9 @@
 package xyz.erupt.k8s_dashboard;
 
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import xyz.erupt.core.annotation.EruptScan;
 import xyz.erupt.core.constant.MenuTypeEnum;
 import xyz.erupt.core.module.EruptModule;
@@ -21,7 +23,8 @@ import java.util.List;
  * @author YuePeng
  */
 @Configuration
-@ComponentScan
+// The standalone launcher lives in this package too; a host application must not pick it up
+@ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = SpringBootApplication.class))
 @EruptScan
 public class EruptK8sDashboardAutoConfiguration implements EruptModule {
 
