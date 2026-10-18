@@ -10,7 +10,7 @@ A ready-made Kubernetes admin. Add the dependency and a **Kubernetes** menu appe
 </dependency>
 ```
 
-Built on [erupt-data-k8s](../../erupt-data/erupt-data-k8s). To model a resource the dashboard does not ship, such as a custom resource, use `@EruptK8s` there.
+Built on [erupt-data-k8s](https://github.com/erupts/erupt/tree/develop/erupt-data/erupt-data-k8s), which ships with erupt 2.4.0 or newer. To model a resource the dashboard does not ship, such as a custom resource, use `@EruptK8s` there.
 
 ## What you get
 

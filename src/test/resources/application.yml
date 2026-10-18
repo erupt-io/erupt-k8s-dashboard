@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:erupt-k8s-dashboard;DB_CLOSE_DELAY=-1;MODE=MySQL;CASE_INSENSITIVE_IDENTIFIERS=TRUE;DATABASE_TO_LOWER=TRUE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    show-sql: false
+    generate-ddl: true
+    database: h2
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+erupt:
+  # absolute path: a relative one is resolved against the servlet temp dir by MultipartFile.transferTo
+  upload-path: ${java.io.tmpdir}/erupt-k8s-dashboard-upload
