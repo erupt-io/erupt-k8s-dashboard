@@ -2,6 +2,7 @@ package xyz.erupt.k8s_dashboard;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import xyz.erupt.core.annotation.EruptScan;
 
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import java.util.Map;
  * @author YuePeng
  */
 @SpringBootApplication
+@EruptScan
 public class EruptK8sDashboardApplication {
 
     public static void main(String[] args) {
