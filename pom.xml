@@ -26,6 +26,12 @@
     </properties>
 
     <dependencies>
+        <!-- every erupt module had these from the erupt parent -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>xyz.erupt</groupId>
             <artifactId>erupt-data-k8s</artifactId>
