@@ -16,9 +16,10 @@ mvn test -Dtest=KubeDashboardTest#workspacePicksTheNamespace
 mvn spring-boot:run
 ```
 
-Java 17, system `mvn` (no wrapper). The parent pom is `xyz.erupt:erupt:2.4.0`, which also supplies the
-Spring Boot version and dependency management; if it does not resolve, install the erupt checkout
-(`../erupt`, `mvn clean install -DskipTests`) into the local repository first.
+Java 17, system `mvn` (no wrapper). The parent pom is `spring-boot-starter-parent` (the Spring Boot version
+erupt is built on), not `xyz.erupt:erupt`: the erupt parent published to Maven Central is flattened and
+carries no dependency management. The erupt version is the `erupt.version` property; erupt 2.4.0 is on
+Maven Central, so a fresh clone builds without the erupt checkout.
 
 ## What this is
 

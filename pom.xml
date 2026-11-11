@@ -3,35 +3,46 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>xyz.erupt</groupId>
     <artifactId>erupt-k8s-dashboard</artifactId>
+    <version>2.4.0</version>
     <name>Erupt : K8s Dashboard</name>
     <description>erupt k8s dashboard → ready-made Kubernetes admin: workloads, network, config and cluster views with logs and a web terminal</description>
     <url>https://github.com/erupt-io/erupt-k8s-dashboard</url>
 
+    <!-- Spring Boot as the parent, not xyz.erupt:erupt: the erupt parent published to Maven Central is flattened
+         (no properties, no dependency management, no compiler setup), so a fresh clone could not build on it.
+         The Spring Boot version is the one erupt ${erupt.version} is built on -->
     <parent>
-        <groupId>xyz.erupt</groupId>
-        <artifactId>erupt</artifactId>
-        <version>2.4.0</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.16</version>
+        <relativePath/>
     </parent>
+
+    <properties>
+        <java.version>17</java.version>
+        <erupt.version>2.4.0</erupt.version>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>xyz.erupt</groupId>
             <artifactId>erupt-data-k8s</artifactId>
-            <version>${project.parent.version}</version>
+            <version>${erupt.version}</version>
         </dependency>
         <!-- The host application brings the erupt stack; here it also runs the standalone launcher -->
         <dependency>
             <groupId>xyz.erupt</groupId>
             <artifactId>erupt-spring-boot-starter</artifactId>
-            <version>${project.parent.version}</version>
+            <version>${erupt.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- The terminal page is a FreeMarker row-operation template -->
         <dependency>
             <groupId>xyz.erupt</groupId>
             <artifactId>erupt-tpl</artifactId>
-            <version>${project.parent.version}</version>
+            <version>${erupt.version}</version>
         </dependency>
         <dependency>
             <groupId>org.freemarker</groupId>
@@ -72,11 +83,30 @@
 
     <build>
         <plugins>
+            <!-- named explicitly, as the erupt parent does: a JDK from 23 on no longer runs the annotation
+                 processors it merely finds on the class path -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                            <version>${project.parent.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
             <!-- A library: no repackaging, the plugin only serves `mvn spring-boot:run` -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.version}</version>
                 <executions>
                     <execution>
                         <id>repackage</id>
