@@ -17,5 +17,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+      # The erupt parent published to Maven Central is flattened: no properties, no dependency management,
+      # no compiler setup. The build takes the parent pom from the erupt repository at the same version.
+      - name: Install the erupt parent pom
+        run: |
+          version=$(sed -n '/<parent>/,/<\/parent>/s:.*<version>\(.*\)</version>.*:\1:p' pom.xml)
+          git clone --depth 1 --branch "$version" https://github.com/erupts/erupt.git "$RUNNER_TEMP/erupt"
+          mvn -B -N -q install --file "$RUNNER_TEMP/erupt/pom.xml"
       - name: Build and test
         run: mvn -B verify --file pom.xml
